@@ -3,22 +3,22 @@ class Paddle(object):
     paddle object used in game.
 
     x: int
-        normalized x
+        x in pixels
 
     y: int
-        normalized y
+        y in pixels
 
     height: int
-        normalized height
+        height in pixels
 
     width: int:
-        normalized width
+        width in pixels
     """
     def __init__(self):
         self.x: int = 0
-        self._y: int = 0.5
-        self.height = 0.02
-        self.width = 0.005
+        self._y: int = 400
+        self.height = 100
+        self.width = 30
 
     def set_pos_from_coords(self, coords: tuple[float, float]):
         """
@@ -28,7 +28,10 @@ class Paddle(object):
             normalized coords (x,y)
         """
         if coords:
-            self.x, self.y = coords
+            x = 800*coords[0]
+            y = 600*coords[1]
+            self.x = x
+            self.y = y
 
     def get_coords(self):
         return (self.x, self.y)

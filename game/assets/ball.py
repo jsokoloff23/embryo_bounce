@@ -5,31 +5,31 @@ class Ball(object):
     instance attributes:
 
     self.x: int
-        normalized x
+        x in pixels
 
     self.y: int
-        normalized y
+        y in pixels
 
     self.speed: int
-        normalized speed
+        speed in pixels
 
     self.x_vel: int
-        normalzed x velocity
+        x velocity in pixels per frame
 
     self.y_vel: int = 0
-        normalized y velocity
+        y velocity in pixels per frame
 
     self.radius: int = 0.02
-        normalized radius
+        radius in pixels
     """
     _MIN_SPEED = 1
     def __init__(self):
         self.x: int = 0
         self.y: int = 0
-        self._speed: int = -0.05
+        self._speed: int = 5
         self.x_vel: int = -self.speed
         self.y_vel: int = 0
-        self.radius: int = 0.02
+        self.radius: int = 10
 
     @property
     def speed(self):
@@ -46,6 +46,3 @@ class Ball(object):
     
     def get_coords(self):
         return (self.x, self.y)
-    
-    def set_from_coords(self, coords):
-        selfx, self.y = coords
