@@ -1,28 +1,48 @@
 import cv2
-import numpy as np
-import mediapipe as mp
-import time
 
-class Cam(object):
-    def __init__(self):
-        self.cap = cv2.VideoCapture(0)
-    
-    def start_stream(self, landmarker):
-        i = 0
-        while True:
-            succes, img = self.cap.read()
-            i += 1
-            flipped = np.array(np.flip(img, 1))
-            mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=flipped)
-            landmarker.detect_async(mp_image, i)
-            cv2.imshow('frame', flipped)
-            if cv2.waitKey(1) == ord('q'):
-                break
+from threading import Thread
 
-    def stop_stream(self):
+from utils.hand_detection import HandDetector
+
+
+class HandCam(Thread):
+    """
+    Handcam streams images from the webcam and sends them to the hand detector
+    to be processed by hand tracking.
+
+    Constructor Parameters:
+
+    hand_detector: utils.HandDetector
+        hand_detector that images are streamed to
+
+    index: int = 0
+        index of webcam to be used
+    """
+    def __init__(self, hand_detector: HandDetector, index: int = 0):
+        #Thread init() must be called or else exception is raised
+        super().__init__()
+        self.cap = cv2.VideoCapture(index)
+        self.is_stopped = False
+        self.hand_detector = hand_detector
+
+    def start_stream(self):
+        """
+        Starts capturing of images and sends stream to hand_detection.
+        """
+        while not self.is_stopped:
+            captured, image = self.cap.read()
+            if captured:
+                self.hand_detector.detect_async(image)
+        #release when feed is stopped by is_stopped flag
         self.cap.release()
-        cv2.destroyAllWindows()
-
-    def not_found(self):
-        return not self.cap.isOpened()
+        
+    def stop_stream(self):
+        self.is_stopped = True
+        
+    def run(self):
+        """
+        starts stream. Should be called by Thread.start() method to run in
+        separate thread.
+        """
+        self.start_stream()
 
