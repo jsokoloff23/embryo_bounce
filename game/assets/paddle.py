@@ -1,3 +1,5 @@
+import pygame
+
 class Paddle(object):
     """
     paddle object used in game.
@@ -19,6 +21,7 @@ class Paddle(object):
         self._y: int = 400
         self.height = 100
         self.width = 30
+        self.image = pygame.image.load("game/assets/images/zebrafish.py")
 
     def set_pos_from_coords(self, coords: tuple[float, float]):
         """

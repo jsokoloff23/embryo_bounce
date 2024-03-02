@@ -1,3 +1,5 @@
+import pygame
+
 class Ball(object):
     """
     ball object used in game.
@@ -30,6 +32,7 @@ class Ball(object):
         self.x_vel: int = -self.speed
         self.y_vel: int = 0
         self.radius: int = 10
+        self.image = pygame.image.load("game/assets/images/embryo.py")
 
     @property
     def speed(self):
