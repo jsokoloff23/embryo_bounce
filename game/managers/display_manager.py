@@ -5,6 +5,7 @@ import pygame
 from game.managers.draw_manager import DrawManager
 from game.assets.paddle import Paddle
 from game.assets.ball import Ball
+from game.assets.border import Borders
 from utils.hand_detection import HandDetector
 from utils.camera import HandCam
 from utils import constants
@@ -15,11 +16,13 @@ class DisplayManager():
                  hand_detector: HandDetector,
                  hand_cam: HandCam,
                  paddle: Paddle, 
-                 ball: Ball):
+                 ball: Ball,
+                 borders: Borders):
         self.hand_detector = hand_detector
         self.hand_cam = hand_cam
         self.paddle = paddle
         self.ball = ball
+        self.borders = borders
         self.draw_manager = DrawManager()
         self.size = (800, 720)
         self.cam_size = self._init_cam_size()
@@ -34,7 +37,7 @@ class DisplayManager():
         self._set_cam_surface()
         self._blit_bg_surface()
         self._blit_cam_surface()
-        self._blit_game_surface()
+        self._bilt_game_surface()
         pygame.display.update()
 
     def _init_cam_size(self):
@@ -64,7 +67,7 @@ class DisplayManager():
     def _blit_cam_surface(self):
         self.display.blit(self.cam_surface, self.cam_coords)
     
-    def _blit_cam_surface(self):
+    def _bilt_game_surface(self):
         self.display.blit(self.game_surface, self.game_coords)
 
     def _draw_game(self):
