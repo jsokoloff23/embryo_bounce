@@ -45,3 +45,4 @@ class Borders(object):
                           height=Border.DEF_SHORT, 
                           width=constants.GAME_X_SIZE, 
                           color=constants.GREEN)
+        

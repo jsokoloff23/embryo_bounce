@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import pygame
 
-from game.draw_manager import DrawManager
+from game.managers.draw_manager import DrawManager
 from game.assets.paddle import Paddle
 from game.assets.ball import Ball
 from utils.hand_detection import HandDetector

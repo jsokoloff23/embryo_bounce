@@ -2,8 +2,9 @@ import pygame
 
 from utils.hand_detection import HandDetector
 from utils.camera import HandCam
-from game.display_manager import DisplayManager
-from game.position_manager import PositionManager
+from game.managers.display_manager import DisplayManager
+from game.managers.position_manager import PositionManager
+from game.managers.collision_manager import CollisionManager
 from game.assets.ball import Ball
 from game.assets.paddle import Paddle
 from game.assets.border import Borders
@@ -21,8 +22,10 @@ class Game(object):
         self.display_manager = DisplayManager(
             self.hand_detector, self.hand_cam, self.paddle, self.ball, 
             self.borders)
+        self.collision_manager = CollisionManager(self.ball, self.paddle, self.borders)
         self.position_manager = PositionManager(
-            self.hand_detector, self.paddle, self.ball, self.borders)
+            self.hand_detector, self.paddle, self.ball, self.borders, 
+            self.collision_manager)
         self.clock = pygame.time.Clock()
         self.frame_rate = 60
 
