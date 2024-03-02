@@ -25,6 +25,8 @@ class DisplayManager():
         self.cam_size = self._init_cam_size()
         self.cam_coords = (0, 0)
         self.bg_coords = (0, 0)
+        self.bg_size = (800, 600)
+        self.game_coords = (0, self.cam_size[1])
         self.display = pygame.display.set_mode(self.size)
 
     def update(self):
@@ -32,6 +34,7 @@ class DisplayManager():
         self._set_cam_surface()
         self._blit_bg_surface()
         self._blit_cam_surface()
+        self._blit_game_surface()
         pygame.display.update()
 
     def _init_cam_size(self):
@@ -61,7 +64,13 @@ class DisplayManager():
     def _blit_cam_surface(self):
         self.display.blit(self.cam_surface, self.cam_coords)
     
+    def _blit_cam_surface(self):
+        self.display.blit(self.game_surface, self.game_coords)
+
     def _draw_game(self):
+        self.draw_manager.draw_border(self.game_surface, self.borders.top)
+        self.draw_manager.draw_border(self.game_surface, self.borders.back)
+        self.draw_manager.draw_border(self.game_surface, self.borders.bot)
         self.draw_manager.draw_ball(self.bg_surface, self.ball)
         self.draw_manager.draw_paddle(self.bg_surface, self.paddle)
 
@@ -70,4 +79,8 @@ class DisplayManager():
         bg_shape = (self.size[0], self.size[1], 3)
         bg_array = np.ones(bg_shape)*constants.LIGHT_BLUE
         self.bg_surface = pygame.surfarray.make_surface(bg_array)
+
+    def _init_game_surface(self):
+        game_surface = pygame.image.load("game/assets/images/background.jpg")
+        self.game_surface = pygame.transform.scale(game_surface, self.bg_size)
     

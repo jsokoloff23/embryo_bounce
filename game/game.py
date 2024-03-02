@@ -6,6 +6,7 @@ from game.display_manager import DisplayManager
 from game.position_manager import PositionManager
 from game.assets.ball import Ball
 from game.assets.paddle import Paddle
+from game.assets.border import Borders
 
 
 class Game(object):
@@ -16,10 +17,12 @@ class Game(object):
         self.hand_cam = HandCam(self.hand_detector)
         self.paddle = Paddle()
         self.ball = Ball()
+        self.borders = Borders()
         self.display_manager = DisplayManager(
-            self.hand_detector, self.hand_cam, self.paddle, self.ball)
+            self.hand_detector, self.hand_cam, self.paddle, self.ball, 
+            self.borders)
         self.position_manager = PositionManager(
-            self.hand_detector, self.paddle, self.ball)
+            self.hand_detector, self.paddle, self.ball, self.borders)
         self.clock = pygame.time.Clock()
         self.frame_rate = 60
 
