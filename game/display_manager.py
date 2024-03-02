@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 import pygame
 
+from game.draw_manager import DrawManager
 from game.assets.paddle import Paddle
 from game.assets.ball import Ball
 from hand_tracking.hand_detector import HandDetector
@@ -18,13 +19,18 @@ class DisplayManager():
         self.hand_cam = hand_cam
         self.paddle = paddle
         self.ball = ball
+        self.draw_manager = DrawManager()
         self.size = (800, 720)
         self.cam_size = (160, 120)
         self.cam_coords = (0, 0)
+        self.bg_coords = (0, 0)
         self.display = pygame.display.set_mode(self.size)
 
     def update(self):
+        self._init_bg_surface()
         self._set_cam_surface()
+        self._blit_bg_surface()
+        self._blit_cam_surface()
         pygame.display.update()
 
     def _set_cam_surface(self):
@@ -43,5 +49,20 @@ class DisplayManager():
             shape = (self.cam_size[0], self.cam_size[1], 3)
             frame = np.ones(shape)*(255, 255, 255)
             self.cam_surface = pygame.surfarray.make_surface(frame)
+
+    def _blit_bg_surface(self):
+        self.display.blit(self.bg_surface, self.bg_coords)
+
+    def _blit_cam_surface(self):
         self.display.blit(self.cam_surface, self.cam_coords)
+    
+    def _draw_game(self):
+        self.draw_manager.draw_ball(self.bg_surface, self.ball)
+        self.draw_manager.draw_paddle(self.bg_surface, self.paddle)
+
+    def _init_bg_surface(self):
+        #3 for number of color channels
+        bg_shape = (self.size[0], self.size[1], 3)
+        bg_array = np.ones(bg_shape)*(187, 244, 247)
+        self.bg_surface = pygame.surfarray.make_surface(bg_array)
     
