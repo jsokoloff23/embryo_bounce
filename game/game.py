@@ -1,9 +1,9 @@
 import pygame
-import cv2
 
-from hand_tracking.hand_detector import HandDetector
-from hand_tracking.camera import HandCam
+from utils.hand_detection import HandDetector
+from utils.camera import HandCam
 from game.display_manager import DisplayManager
+from game.position_manager import PositionManager
 from game.assets.ball import Ball
 from game.assets.paddle import Paddle
 
@@ -18,6 +18,8 @@ class Game(object):
         self.ball = Ball()
         self.display_manager = DisplayManager(
             self.hand_detector, self.hand_cam, self.paddle, self.ball)
+        self.position_manager = PositionManager(
+            self.hand_detector, self.paddle, self.ball)
         self.clock = pygame.time.Clock()
         self.frame_rate = 60
 
@@ -30,4 +32,5 @@ class Game(object):
         self.hand_cam.start()
         while True:
             self.display_manager.update()
+            self.position_manager.update()
             self.clock.tick(self.frame_rate)
