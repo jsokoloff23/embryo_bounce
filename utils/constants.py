@@ -7,6 +7,8 @@ HAND_POSITION_SCALING = 1.8
 HAND_COORDS_OFFSET = -220
 #camera feed height in game
 CAM_H = 120
+#speed increase increment
+SPEED_INCREMENT = 3
 #colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
