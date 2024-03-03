@@ -32,12 +32,20 @@ class DisplayManager():
         self.game_coords = (0, self.cam_size[1])
         self.display = pygame.display.set_mode(self.size)
 
-    def update(self):
+    def update_game(self):
         self._init_bg_surface()
         self._set_cam_surface()
         self._blit_bg_surface()
         self._blit_cam_surface()
         self._bilt_game_surface()
+        pygame.display.update()
+
+    def high_score_entry_update(self, name):
+        self._set_cam_surface()
+        self._draw_high_score_entry(name)
+        self._blit_bg_surface()
+        self._blit_cam_surface()
+        self._blit_game_surface()
         pygame.display.update()
 
     def _init_cam_size(self):

@@ -7,9 +7,11 @@ from game.managers.display_manager import DisplayManager
 from game.managers.position_manager import PositionManager
 from game.managers.collision_manager import CollisionManager
 from game.managers.sound_manager import SoundManager
+from game.managers.high_score_manager import HighScoreManager
 from game.assets.ball import Ball
 from game.assets.paddle import Paddle
 from game.assets.border import Borders
+from game.mode import Mode
 
 
 class Game(object):
@@ -32,10 +34,12 @@ class Game(object):
         self.position_manager = PositionManager(
             self.hand_detector, self.paddle, self.ball, self.borders, 
             self.collision_manager)
+        self.high_score_manager = HighScoreManager()
         self.clock = pygame.time.Clock()
         self.framerate = 60
         self.frame_num = 0
         self.lives = 3
+        self.score = 0
 
     def main(self):
         """
@@ -45,19 +49,32 @@ class Game(object):
         self.hand_detector.set_landmarker()
         self.hand_cam.start()
         while True:
-            if self.lives:
-                if self.frame_num < Game.INITIAL_WAIT_FRAMES:
-                    self.display_manager.game_update()
-                else:
-                    if not self.is_ball_gone:
-                        self.position_manager.update()
+            if self.mode == Mode.GAME:
+                if self.lives:
+                    if self.frame_num < Game.INITIAL_WAIT_FRAMES:
                         self.display_manager.game_update()
-                        self._increase_ball_speed()
-                        self.frames_no_ball = 0
-                        self._is_ball_gone_update()
                     else:
-                        self._manage_ball_gone()
+                        if not self.is_ball_gone:
+                            self.position_manager.update()
+                            self.display_manager.game_update()
+                            self._increase_ball_speed()
+                            self.frames_no_ball = 0
+                            self._is_ball_gone_update()
+                        else:
+                            self._manage_ball_gone()
+                else:
+                    if self.high_score_manager.is_high_score(self.score):
+                        self.mode = Mode.HIGH_SCORE_ENTRY
+            elif Mode.HIGH_SCORE_ENTRY:
+                self._manage_hs_entry_mode()
+
             self._tick_clock()
+
+    def _get_key_events(self):
+        """
+        returns pygame events that are key presses
+        """
+        return [event for event in pygame.event.get() if event.type == pygame.KEYDOWN]
 
     def _increase_ball_speed(self):
         if self.frames_since_speed > self.framerate*5:
@@ -77,6 +94,37 @@ class Game(object):
             self._spawn_new_ball()
             self.is_ball_gone = False
 
+    def _manage_game_mode(self):
+        if self.lives:
+            if self.frame_num < Game.INITIAL_WAIT_FRAMES:
+                self.display_manager.game_update()
+            else:
+                if not self.is_ball_gone:
+                    self.position_manager.update()
+                    self.display_manager.game_update()
+                    self._increase_ball_speed()
+                    self.frames_no_ball = 0
+                    self._is_ball_gone_update()
+                else:
+                    self._manage_ball_gone()
+        else:
+            if self.high_score_manager.is_high_score(self.score):
+                self.mode = Mode.HIGH_SCORE_ENTRY
+
+    def _manage_hs_entry_mode(self):
+        self.display_manager.high_score_entry_update(self.name)
+        for event in self._get_key_events():
+            if event.key == pygame.K_RETURN:
+                #submits score and switches to play again.
+                self.high_score_manager.write_new_high_score(
+                    self.name, self.score)
+            elif event.key == pygame.K_BACKSPACE:
+                #removes character on backspace
+                self.name = self.name[:-1]
+            else:
+                #adds character
+                self.name += event.unicode
+
     def _spawn_new_ball(self):
         self.ball = Ball()
         self.display_manager.ball = self.ball
@@ -86,4 +134,7 @@ class Game(object):
     def _tick_clock(self):
         self.clock.tick(self.framerate)
         self.frame_num += 1
+        self.frames_since_speed += 1
+        self.frames_no_ball += 1
+        self.score += 1
         

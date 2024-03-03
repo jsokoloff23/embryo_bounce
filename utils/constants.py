@@ -9,6 +9,7 @@ HAND_COORDS_OFFSET = -220
 CAM_H = 120
 #speed increase increment
 SPEED_INCREMENT = 3
+DEF_F_SIZE = 60
 #colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
