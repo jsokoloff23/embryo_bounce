@@ -52,13 +52,22 @@ class Game(object):
                 self._manage_game_mode()
             elif self.mode == Mode.HIGH_SCORE_ENTRY:
                 self._manage_hs_entry_mode()
-            elif Mode.PLAY_AGAIN:
+            elif self.mode == Mode.PLAY_AGAIN:
                 self._manage_play_again_mode()
-            elif Mode.MAIN_MENU:
+            elif self.mode == Mode.MAIN_MENU:
                 self._manage_menu_mode()
             
-
             self._tick_clock()
+
+    def _change_mode(self, mode):
+        #This condition is to avoid switching music when switching between
+        #high scores and menu
+        if self.mode == Mode.HIGH_SCORES:
+            pass
+        elif mode == Mode.GAME or mode == Mode.MAIN_MENU:
+            self._reset_game_variables()
+            self.sound_manager.update_music(mode)
+        self.mode = mode
 
     def _get_key_events(self):
         """
@@ -99,7 +108,7 @@ class Game(object):
                     self._manage_ball_gone()
         else:
             if self.high_score_manager.is_high_score(self.score):
-                self.mode = Mode.HIGH_SCORE_ENTRY
+                self._change_mode(Mode.HIGH_SCORE_ENTRY)
 
     def _manage_hs_entry_mode(self):
         self.display_manager.high_score_entry_update(self.name)
@@ -108,12 +117,14 @@ class Game(object):
                 #submits score and switches to play again.
                 self.high_score_manager.write_new_high_score(
                     self.name, self.score)
+                self._change_mode(Mode.PLAY_AGAIN)
             elif event.key == pygame.K_BACKSPACE:
                 #removes character on backspace
                 self.name = self.name[:-1]
             else:
                 #adds character
-                self.name += event.unicode
+                if len(self.name) <= constants.NAME_CHARACTER_LIMIT:
+                    self.name += event.unicode
 
     def _manage_play_again_mode(self):
         self.display_manager.play_again_update(self.try_again)
@@ -121,10 +132,10 @@ class Game(object):
             if event.key == pygame.K_RETURN:
                 #on enter press, if y or Y is entered, start new game
                 if self.try_again in ["y", "Y"]:
-                    self.mode = Mode.GAME
+                    self._change_mode(Mode.GAME)
                 #on enter press, if y or Y is entered, start new game
                 elif self.try_again in ["n", "N"]:
-                    self.mode = Mode.MAIN_MENU
+                    self._change_mode(Mode.MAIN_MENU)
                 #if neither y nor were entered, reset prompt
                 else:
                     self.try_again = ""
@@ -145,7 +156,7 @@ class Game(object):
                 if not self.button_num == 0:
                     self.button_num -= 1
             elif event.key == pygame.K_RETURN:
-                self.mode = Mode(self.button_num)
+                self._change_mode(Mode(self.button_num))
 
     def _reset_game_variables(self):
         self.framerate = Game.FRAMERATE

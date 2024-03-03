@@ -12,6 +12,9 @@ HAND_COORDS_OFFSET = -220
 CAM_H = 120
 #speed increase increment
 SPEED_INCREMENT = 3
+#character limit for high score name
+NAME_CHARACTER_LIMIT = 12
+#object coords and sizes
 DEF_F_SIZE = 60
 NEW_HS_Y = 250
 HS_ENTRY_Y = 350
@@ -35,6 +38,8 @@ CWD = os.path.dirname(sys.argv[0])
 FISH_IMAGE_PATH = f"{CWD}/game/assets/images/zebrafish.png"
 EMBRYO_IMAGE_PATH = f"{CWD}/game/assets/images/embryo.png"
 BG_IMAGE_PATH = f"{CWD}/game/assets/images/background.jpg"
+MENU_IMAGE_PATH = f"{CWD}/game/assets/images/menu.png"
 GAME_SONG_PATH = f"{CWD}/game/assets/sounds/game_song.mp3"
+MENU_SONG_PATH = f"{CWD}/game/assets/sounds/menu_song.mp3"
 MISTAKE_SOUND_PATH = f"{CWD}/game/assets/sounds/mistake_sound.mp3"
 PADDLE_SOUND_PATH = f"{CWD}/game/assets/sounds/paddle_sound.mp3"
