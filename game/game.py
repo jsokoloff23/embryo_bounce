@@ -6,6 +6,7 @@ from utils.camera import HandCam
 from game.managers.display_manager import DisplayManager
 from game.managers.position_manager import PositionManager
 from game.managers.collision_manager import CollisionManager
+from game.managers.sound_manager import SoundManager
 from game.assets.ball import Ball
 from game.assets.paddle import Paddle
 from game.assets.border import Borders
@@ -22,10 +23,12 @@ class Game(object):
         self.paddle = Paddle()
         self.ball = Ball()
         self.borders = Borders()
+        self.sound_manager = SoundManager()
         self.display_manager = DisplayManager(
             self.hand_detector, self.hand_cam, self.paddle, self.ball, 
             self.borders)
-        self.collision_manager = CollisionManager(self.ball, self.paddle, self.borders)
+        self.collision_manager = CollisionManager(
+            self.ball, self.paddle, self.borders, self.sound_manager)
         self.position_manager = PositionManager(
             self.hand_detector, self.paddle, self.ball, self.borders, 
             self.collision_manager)
@@ -63,8 +66,12 @@ class Game(object):
 
     def _is_ball_gone_update(self):
         self.is_ball_gone = self.position_manager.is_ball_gone()
+        if self.is_ball_gone:
+            self.sound_manager.play_mistake_sound()
 
     def _manage_ball_gone(self):
+        self.position_manager.update()
+        self.display_manager.game_update()
         if self.position_manager.is_ball_gone():
             self.lives -= 1
             self._spawn_new_ball()
