@@ -16,6 +16,7 @@ from game.mode import Mode
 
 class Game(object):
     FRAMERATE = 60
+    INIT_LIVES = 3
     INITIAL_WAIT_FRAMES = 2*FRAMERATE
     def __init__(self):
         #pygame.init() must be called
@@ -36,10 +37,8 @@ class Game(object):
             self.collision_manager)
         self.high_score_manager = HighScoreManager()
         self.clock = pygame.time.Clock()
-        self.framerate = 60
-        self.frame_num = 0
-        self.lives = 3
-        self.score = 0
+        self._reset_game_variables()
+        self.button_num = 0
 
     def main(self):
         """
@@ -50,28 +49,14 @@ class Game(object):
         self.hand_cam.start()
         while True:
             if self.mode == Mode.GAME:
-                if self.lives:
-                    if self.frame_num < Game.INITIAL_WAIT_FRAMES:
-                        self.display_manager.game_update()
-                    else:
-                        if not self.is_ball_gone:
-                            self.position_manager.update()
-                            self.display_manager.game_update()
-                            self._increase_ball_speed()
-                            self.frames_no_ball = 0
-                            self._is_ball_gone_update()
-                        else:
-                            self._manage_ball_gone()
-                else:
-                    if self.high_score_manager.is_high_score(self.score):
-                        self.mode = Mode.HIGH_SCORE_ENTRY
-            elif Mode.HIGH_SCORE_ENTRY:
-                if self.high_score_manager.is_high_score(self.score):
-                    self._manage_hs_entry_mode()
-                else:
-                    self.mode == Mode.PLAY_AGAIN
+                self._manage_game_mode()
+            elif self.mode == Mode.HIGH_SCORE_ENTRY:
+                self._manage_hs_entry_mode()
             elif Mode.PLAY_AGAIN:
                 self._manage_play_again_mode()
+            elif Mode.MAIN_MENU:
+                self._manage_menu_mode()
+            
 
             self._tick_clock()
 
@@ -147,6 +132,31 @@ class Game(object):
                 self.try_again = self.try_again[:-1]
             else:
                 self.try_again += event.unicode
+
+    def _manage_menu_mode(self):
+        self.display_manager.menu_update(self.button_num)
+        for event in self._get_key_events():
+            if event.key == pygame.K_DOWN:
+                #make sure user can only select button that exists
+                if not self.button_num >= Game.NUM_MENU_BUTTONS - 1:
+                    self.button_num += 1
+            elif event.key == pygame.K_UP:
+                #make sure user can only select button that exists
+                if not self.button_num == 0:
+                    self.button_num -= 1
+            elif event.key == pygame.K_RETURN:
+                self.mode = Mode(self.button_num)
+
+    def _reset_game_variables(self):
+        self.framerate = Game.FRAMERATE
+        self.lives = Game.INIT_LIVES
+        self.frame_num = 0
+        self.frames_since_speed = 0
+        self.frames_no_ball = 0
+        self.is_ball_gone = False
+        self.score = 0
+        self.name = ""
+        self.try_again = ""
 
     def _spawn_new_ball(self):
         self.ball = Ball()

@@ -35,7 +35,7 @@ class DisplayManager():
         self.bg_surface_copy = self._init_bg_surface_copy()
         self.game_surface_copy = self._init_game_surface_copy()
 
-    def update_game(self):
+    def game_update(self):
         self._init_bg_surface()
         self._set_cam_surface()
         self._blit_bg_surface()
@@ -57,6 +57,11 @@ class DisplayManager():
         self._blit_bg_surface()
         self._blit_cam_surface()
         self._blit_game_surface()
+        pygame.display.update()
+
+    def menu_update(self, button_num):
+        self._draw_menu(button_num)
+        self._blit_menu_surface()
         pygame.display.update()
 
     def _init_cam_size(self):
@@ -89,11 +94,29 @@ class DisplayManager():
     def _blit_game_surface(self):
         self.display.blit(self.game_surface, self.game_coords)
 
+    def _blit_menu_surface(self):
+        self.display.blit(self.menu_surface, self.bg_coords)
+
+    #TODO all of these draw events should probably go to the draw manager
+    def _draw_menu(self, button_num):
+        #copy so we don't have to load image in each time
+        self.menu_surface = self.menu_surface_copy.copy()
+        self.draw_manager.draw_rectangle(surface=self.menu_surface, 
+                                         color=constants.GREEN, 
+                                         x=constants.MENU_BOX_X, 
+                                         y=constants.MENU_BOX_Y_DEF+constants.MENU_BOX_Y_INCR*button_num, 
+                                         width=constants.MENU_BOX_W, 
+                                         height=constants.MENU_BOX_H, 
+                                         border_w=constants.MENU_BOX_BORDER_W)
+        
     def _draw_game(self):
+        self.game_surface = self.game_surface_copy.copy()
+        self.bg_surface = self.bg_surface_copy.copy()
         self.draw_manager.draw_border(self.game_surface, self.borders.top)
         self.draw_manager.draw_border(self.game_surface, self.borders.back)
         self.draw_manager.draw_border(self.game_surface, self.borders.bot)
-        self.draw_manager.draw_ball(self.bg_surface, self.ball)
+        if self.ball:
+            self.draw_manager.draw_ball(self.bg_surface_copy, self.ball)
         self.draw_manager.draw_paddle(self.bg_surface, self.paddle)
 
     def _draw_high_score_entry(self, name):
