@@ -66,7 +66,12 @@ class Game(object):
                     if self.high_score_manager.is_high_score(self.score):
                         self.mode = Mode.HIGH_SCORE_ENTRY
             elif Mode.HIGH_SCORE_ENTRY:
-                self._manage_hs_entry_mode()
+                if self.high_score_manager.is_high_score(self.score):
+                    self._manage_hs_entry_mode()
+                else:
+                    self.mode == Mode.PLAY_AGAIN
+            elif Mode.PLAY_AGAIN:
+                self._manage_play_again_mode()
 
             self._tick_clock()
 
@@ -124,6 +129,24 @@ class Game(object):
             else:
                 #adds character
                 self.name += event.unicode
+
+    def _manage_play_again_mode(self):
+        self.display_manager.play_again_update(self.try_again)
+        for event in self._get_key_events():
+            if event.key == pygame.K_RETURN:
+                #on enter press, if y or Y is entered, start new game
+                if self.try_again in ["y", "Y"]:
+                    self.mode = Mode.GAME
+                #on enter press, if y or Y is entered, start new game
+                elif self.try_again in ["n", "N"]:
+                    self.mode = Mode.MAIN_MENU
+                #if neither y nor were entered, reset prompt
+                else:
+                    self.try_again = ""
+            elif event.key == pygame.K_BACKSPACE:
+                self.try_again = self.try_again[:-1]
+            else:
+                self.try_again += event.unicode
 
     def _spawn_new_ball(self):
         self.ball = Ball()
