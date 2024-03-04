@@ -23,7 +23,6 @@ class DisplayManager():
         self.paddle = paddle
         self.ball = ball
         self.borders = borders
-        self.draw_manager = DrawManager()
         self.size = (800, 720)
         self.cam_size = self._init_cam_size()
         self.cam_coords = (0, 0)
@@ -34,13 +33,14 @@ class DisplayManager():
         #init copies so we only have to load them once
         self.bg_surface_copy = self._init_bg_surface_copy()
         self.game_surface_copy = self._init_game_surface_copy()
+        self.menu_surface_copy = self._init_menu_surface_copy()
 
-    def game_update(self):
-        self._init_bg_surface()
+    def game_update(self, lives, score):
         self._set_cam_surface()
+        self._draw_game(lives, score)
         self._blit_bg_surface()
         self._blit_cam_surface()
-        self._bilt_game_surface()
+        self._blit_game_surface()
         pygame.display.update()
 
     def high_score_entry_update(self, name):
@@ -101,23 +101,34 @@ class DisplayManager():
     def _draw_menu(self, button_num):
         #copy so we don't have to load image in each time
         self.menu_surface = self.menu_surface_copy.copy()
-        self.draw_manager.draw_rectangle(surface=self.menu_surface, 
-                                         color=constants.GREEN, 
-                                         x=constants.MENU_BOX_X, 
-                                         y=constants.MENU_BOX_Y_DEF+constants.MENU_BOX_Y_INCR*button_num, 
-                                         width=constants.MENU_BOX_W, 
-                                         height=constants.MENU_BOX_H, 
-                                         border_w=constants.MENU_BOX_BORDER_W)
+        DrawManager.draw_rectangle(surface=self.menu_surface, 
+                                   color=constants.GREEN, 
+                                   x=constants.MENU_BOX_X, 
+                                   y=constants.MENU_BOX_Y_DEF+constants.MENU_BOX_Y_INCR*button_num, 
+                                   width=constants.MENU_BOX_W, 
+                                   height=constants.MENU_BOX_H, 
+                                   border_w=constants.MENU_BOX_BORDER_W)
         
-    def _draw_game(self):
+    def _draw_game(self, score, lives):
         self.game_surface = self.game_surface_copy.copy()
         self.bg_surface = self.bg_surface_copy.copy()
-        self.draw_manager.draw_border(self.game_surface, self.borders.top)
-        self.draw_manager.draw_border(self.game_surface, self.borders.back)
-        self.draw_manager.draw_border(self.game_surface, self.borders.bot)
+        DrawManager.draw_border(self.game_surface, self.borders.top)
+        DrawManager.draw_border(self.game_surface, self.borders.back)
+        DrawManager.draw_border(self.game_surface, self.borders.bot)
         if self.ball:
-            self.draw_manager.draw_ball(self.bg_surface_copy, self.ball)
-        self.draw_manager.draw_paddle(self.bg_surface, self.paddle)
+            DrawManager.draw_ball(self.bg_surface_copy, self.ball)
+        DrawManager.draw_paddle(self.bg_surface, self.paddle)
+        DrawManager.draw_lives(self.bg_surface, self.paddle, lives)
+        DrawManager.draw_text_box(surface=self.bg_surface, 
+                                  text=f"Score: {score}", 
+                                  x=constants.SCORE_BOX_X, 
+                                  y=constants.SCORE_BOX_Y, 
+                                  font_size=constants.GAME_UI_F_SIZE)
+        DrawManager.draw_text_box(surface=self.bg_surface, 
+                                  text=f"Lives", 
+                                  x=constants.LIVES_TEXT_X, 
+                                  y=constants.LIVES_TEXT_Y, 
+                                  font_size=constants.GAME_UI_F_SIZE)
 
     def _draw_high_score_entry(self, name):
         self.game_surface = self.game_surface_copy.copy()
@@ -142,4 +153,8 @@ class DisplayManager():
     def _init_game_surface_copy(self):
         game_surface = pygame.image.load(constants.BG_IMAGE_PATH)
         return pygame.transform.scale(game_surface, self.bg_size)
+    
+    def _init_menu_surface_copy(self):
+        menu_surface =  pygame.image.load(constants.MENU_IMAGE_PATH)
+        return pygame.transform.scale(menu_surface, self.size)
     

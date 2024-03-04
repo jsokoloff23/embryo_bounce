@@ -87,7 +87,7 @@ class Game(object):
 
     def _manage_ball_gone(self):
         self.position_manager.update()
-        self.display_manager.game_update()
+        self.display_manager.game_update(self.lives, self.score)
         if self.position_manager.is_ball_gone():
             self.lives -= 1
             self._spawn_new_ball()
@@ -96,11 +96,11 @@ class Game(object):
     def _manage_game_mode(self):
         if self.lives:
             if self.frame_num < Game.INITIAL_WAIT_FRAMES:
-                self.display_manager.game_update()
+                self.display_manager.game_update(self.lives, self.score)
             else:
                 if not self.is_ball_gone:
                     self.position_manager.update()
-                    self.display_manager.game_update()
+                    self.display_manager.game_update(self.lives, self.score)
                     self._increase_ball_speed()
                     self.frames_no_ball = 0
                     self._is_ball_gone_update()

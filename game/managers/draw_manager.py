@@ -7,28 +7,42 @@ from utils import constants
 
 class DrawManager(object):
     IMAGE_ANGLE = -90
-
-    def draw_border(self, surface: pygame.Surface, border: Border):
+    
+    @classmethod
+    def draw_border(cls, surface: pygame.Surface, border: Border):
         color = border.color
         width = border.width
         height = border.height
         x = border.x
         y = border.y
-        self.draw_rectangle(surface, color, x, y, width, height)
+        cls.draw_rectangle(surface, color, x, y, width, height)
 
-    def draw_rectangle(self, surface: pygame.Surface, color, x, y, width, height , border_w=0):
+    @classmethod
+    def draw_rectangle(cls, surface: pygame.Surface, color, x, y, width, height , border_w=0):
         rect = pygame.Rect(x, y, width, height)
         pygame.draw.rect(surface, color, rect, width=border_w)
 
-    def draw_paddle(self, surface: pygame.Surface, paddle: Paddle):
+    @classmethod
+    def draw_paddle(cls, surface: pygame.Surface, paddle: Paddle):
         width = paddle.width
         height = paddle.height
         image = paddle.image
         image = pygame.transform.scale(paddle.image, (height, width))
-        image = pygame.transform.rotate(image, DrawManager.IMAGE_ANGLE)
+        image = pygame.transform.rotate(image, cls.IMAGE_ANGLE)
         surface.blit(image, paddle.get_coords())
 
-    def draw_text_box(self, surface: pygame.Surface, 
+    @classmethod
+    def draw_ball(cls, surface: pygame.Surface, ball: Ball):
+        diameter = ball.radius*2
+        image = ball.image
+        image = pygame.transform.scale(image, (diameter, diameter))
+        x, y = ball.get_coords()
+        x = int(x - ball.radius)
+        y = int(y - ball.radius)
+        surface.blit(image, (x,y))
+    
+    @classmethod
+    def draw_text_box(cls, surface: pygame.Surface, 
                       text: str, 
                       x: int = None,
                       y: int= None, 
@@ -66,12 +80,15 @@ class DrawManager(object):
             y = size[0]/2 - text_surface.get_height()/2
         surface.blit(text_surface, (x, y))
 
-    def draw_ball(cls, surface: pygame.Surface, ball: Ball):
-        diameter = ball.radius*2
-        image = ball.image
-        image = pygame.transform.scale(image, (diameter, diameter))
-        x, y = ball.get_coords()
-        x = int(x - ball.radius)
-        y = int(y - ball.radius)
-        surface.blit(image, (x,y))
+    @classmethod
+    def draw_lives(cls, surface: pygame.Surface, paddle:Paddle, lives: int):
+        width = paddle.width
+        height = paddle.height
+        image = paddle.image
+        image = pygame.transform.scale(paddle.image, (height, width))
+        image = pygame.transform.rotate(image, cls.IMAGE_ANGLE)
+        for life in range(lives-1):
+            x = constants.LIVES_IMAGE_X-life*constants.LIVES_IMAGE_X_INCR
+            y = constants.LIVES_IMAGE_Y
+            surface.blit(image, (x, y))
     
