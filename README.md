@@ -23,8 +23,6 @@ SOFTWARE.
 
 -->
 
-<!-- README-TOP -->
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -111,9 +109,6 @@ completely fine. As long as modules from requirements.txt are installed, this sh
  python <cloned_repo_directory>/embry_bounce/main.py
  ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 ## How to Play
 <p align="left">
   Once the game is launched, you'll be met with the main menu! It uses the arrow keys
@@ -142,15 +137,10 @@ completely fine. As long as modules from requirements.txt are installed, this sh
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- CONTACT -->
 ## Contact
 
 Email: jsokoloff23@gmail.com
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <!-- ACKNOWLEDGMENTS -->
 ## Code Acknowledgments
