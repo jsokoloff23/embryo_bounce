@@ -27,7 +27,7 @@ SOFTWARE.
 <br />
 <div align="center">
   <a href="https://github.com/rplab/LS_Pycro_App">
-    <img src="https://raw.githubusercontent.com/jsokoloff23/embryo_bounce/main/embryo.PNG?token=GHSAT0AAAAAACOOMC2LGW4DDLUU753SFAGMZPHNV5A" alt="Logo" width="80" height="80">
+    <img src="https://raw.githubusercontent.com/jsokoloff23/embryo_bounce/main/embryo.PNG?token=GHSAT0AAAAAACOOMC2LMHHJTY74EX6QRSZ6ZPHORHA" alt="Logo" width="80" height="80">
   </a>
 
 ## embryo_bounce
@@ -45,8 +45,8 @@ Hello!
 
 ### Prerequisites
 
-This program has only been tested on Python 3.10.1 and 3.10.11. Other Python versions
-in this range or later versions may work but use at your own risk.
+This program has only been tested on Python 3.10.1 and 3.10.11 on macOS and Windows 11. 
+Other operating systems and Python versions may work but use at your own risk.
 
 For macOS users, MediaPipe version 0.10.10 does NOT work correctly on macOS. Version 0.10.9 is 
 completely fine. As long as modules from requirements.txt are installed, this shouldn't be an issue.
