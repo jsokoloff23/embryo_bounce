@@ -8,7 +8,7 @@ class SoundManager(object):
         self.mistake_sound = pygame.mixer.Sound(constants.MISTAKE_SOUND_PATH)
         self.mode = mode
     
-    def update_music(self, mode: Mode = None):
+    def update_music(self, mode: Mode):
         if mode != self.mode:
             self.mode = mode
             if self.mode == Mode.GAME:
