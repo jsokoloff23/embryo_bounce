@@ -27,7 +27,7 @@ class HandDetector(object):
     def __init__(self):
         self._result = None
         self._image = None
-        self.model_asset_path = f"{constants.CWD}/utils/hand_landmarker.task"
+        self.model_asset_path = constants.HAND_MODEL_PATH
         self.num_hands = 1
         self.min_hand_detection_confidence=0.2
         self.min_hand_presence_confidence=0.2
