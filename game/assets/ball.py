@@ -1,4 +1,6 @@
+import numpy as np
 import pygame
+from utils import constants
 
 class Ball(object):
     """
@@ -7,32 +9,46 @@ class Ball(object):
     instance attributes:
 
     self.x: int
-        x in pixels
+        x position in pixels
 
     self.y: int
-        y in pixels
+        y position in pixels
 
     self.speed: int
-        speed in pixels
+        ball speed, in pixels/frame
 
     self.x_vel: int
-        x velocity in pixels per frame
+        x velocity, in pixels/frame
 
     self.y_vel: int = 0
-        y velocity in pixels per frame
+        y velocity, in pixels/frame
 
-    self.radius: int = 0.02
-        radius in pixels
+    self.radius: int = 20
+        radius of ball in pixels
+
+    self.area_density: int
+        area density of ball
+
+    self.image_path: str
+        path of image to be used as ball texture
+
+    self.image: pygame.Surface
+        image to be used as ball texture
     """
     _MIN_SPEED = 1
     def __init__(self):
-        self.x: int = 0
-        self.y: int = 0
+        self.x: int = 400
+        self.y: int = 300
         self._speed: int = 5
         self.x_vel: int = -self.speed
         self.y_vel: int = 0
-        self.radius: int = 10
-        self.image = pygame.image.load("game/assets/images/embryo.py")
+        self.radius: int = 20
+        self.area_density = 1
+        self.image = pygame.image.load(constants.EMBRYO_IMAGE_PATH)
+    
+    @property
+    def mass(self):
+        return np.pi*self.radius**2*self.area_density
 
     @property
     def speed(self):
@@ -46,6 +62,25 @@ class Ball(object):
         self.y_vel = int(y_fact*value)
         self._speed = value
 
+    @property
+    def image_path(self):
+        return self._image_path
+    
+    #so that image is updated to match path
+    @image_path.setter
+    def image_path(self, value):
+        self.image = pygame.image.load(value)
+        self._image_path = value
     
     def get_coords(self):
         return (self.x, self.y)
+
+    def set_pos_from_coords(self, coords: tuple[float, float]):
+        """
+        arguments:
+
+        coords: tuple[float, float]
+            normalized coords (x,y)
+        """
+        if coords:
+            self.x , self.y = coords
