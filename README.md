@@ -32,7 +32,7 @@ SOFTWARE.
 
 ## embryo_bounce
 
-  <p align="center">
+  <p align="left">
     embry_bounce is a pygame-based pong-style game with zebrafish assets and hand motion controls! 
   </p>
 </div>
@@ -40,7 +40,7 @@ SOFTWARE.
 ## About
 <p align="left">
     Hello! My name is Jonah and I'm a research assistant in the Parthasarathy lab in the Department 
-    of Physics at the University of Oregon. This game was created for an interview process at CZBiohub.
+    of Physics at the University of Oregon. This game was created as part of an interview process at CZBiohub.
   </p>
 
 ## Design
@@ -147,14 +147,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Email: jsokoloff23@gmail.com
 
-Project Link: [https://github.com/jsokoloff23/embryo_bounce](https://github.com/jsokoloff23/embryo_bounce)
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 <!-- ACKNOWLEDGMENTS -->
 ## Code Acknowledgments
-
 * [Pygame](https://github.com/pygame/)
 * [MediaPipe](https://github.com/google/mediapipe)
 * [OpenCV](https://github.com/opencv/opencv)
