@@ -38,7 +38,47 @@ SOFTWARE.
 </div>
 
 ## About
-Hello! 
+<p align="left">
+    Hello! My name is Jonah and I'm a research assistant in the Parthasarathy lab in the Department 
+    of Physics at the University of Oregon. This game was created for an interview process at CZBiohub.
+  </p>
+
+## Design
+
+### Core
+<p align="left">
+    embryo_bounce is pygame-based and uses many of its core systems, such as its display, drawing, sound,
+    surfaces, and event updates.
+  </p>
+
+  <p align="left">
+    To better modularize the code, embryo bounce uses managers to manage certain aspects of the game.
+    The managers include PositionManager, CollisionManager, DrawManager, DisplayManager, HighScoreManager,
+    and SoundManager.
+  </p>
+
+### Controls
+  <p align="left">
+    For embryo_bounce's hand motion controls, it uses an OpenCV's VideCapture instance in a worker thread to create
+    a constant stream of images. The images are then processed by MediaPipe, a Google ML and AI library. 
+    MediaPipe's Hand Landmarks Detection is able to process images and determine if a hand is present as 
+    well as the location of its prominent features (landmarks), which is returned as a Results object. 
+    Each Result instance includes x,y coordinates (given as normalized floats) of each landmark, which 
+    are then used to update the paddle position in the game!
+  </p>
+
+### Other Aspects
+ <p align="left">
+    The code style adheres to PEP8 for the most part. I usually use a linter but Line limits are broken when readability would be
+    sacrificed (I'm a general proponent of 100 character limit). 
+  </p>
+
+### Assets
+ <p align="left">
+    The assets in the game are all zebrafish related (perhaps the sounds are debatable). Zebrafish are
+    the primary imaging specimen used in our lab and one that is of great importance in modern biology.
+ </p>
+
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -71,6 +111,30 @@ completely fine. As long as modules from requirements.txt are installed, this sh
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+
+## How to Play
+<p align="left">
+  Once the game is launched, you'll be met with the main menu! It uses the arrow keys
+  and enter to control. Hit start and move your hand up and down to move the paddle.
+  Controls are much like original pong where the ball location on the paddle determines
+  its angle.
+</p>
+
+<p align="left">
+  If a high score is achieved, enter your name and press enter! Check out the high scores
+  from the main menu. When prompted to play again, hit y to restart the game or n to return
+  to the main menu. You may also hit escape during the game to return to the main menu.
+</p>
+
+<p align="left">
+  To exit, select the exit button on the main menu.
+</p>
+
+<p align="left">
+  (I considered showing off more assets and an image of the gameplay here but I want it
+  to be a surprise)
+</p>
+
 <!-- LICENSE -->
 ## License
 
@@ -96,8 +160,8 @@ Project Link: [https://github.com/jsokoloff23/embryo_bounce](https://github.com/
 * [OpenCV](https://github.com/opencv/opencv)
 
 ## Asset Acknowledgements
-* Zebrafish.png taken from [CNN](https://www.cnn.com/2021/02/04/americas/zebrafish-fins-limbs-scn/index.html)
-* Embryo.png taken from [Pinterest](https://www.pinterest.com/pin/405183297731630365/)
+* zebrafish.png taken from [CNN](https://www.cnn.com/2021/02/04/americas/zebrafish-fins-limbs-scn/index.html)
+* embryo.png taken from [Pinterest](https://www.pinterest.com/pin/405183297731630365/)
 * Background.jpg taken from [OpenGameArt](https://lpc.opengameart.org/content/underwater-background-0)
 * All sounds and music from [Pixabay](https://pixabay.com/)
 
