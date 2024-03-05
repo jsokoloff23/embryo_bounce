@@ -32,7 +32,7 @@ SOFTWARE.
 
 ## embryo_bounce
 
-  <p align="left">
+  <p align="center">
     embry_bounce is a pygame-based pong-style game with zebrafish assets and hand motion controls! 
   </p>
 </div>
