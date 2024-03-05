@@ -1,7 +1,12 @@
+"""
+This module contains the Border and Borders classes which are used in the
+game the borders that the ball cannot pass through.
+"""
+
 from utils import constants
 
+
 class Border(object):
-    DEF_SHORT = 20
     """
     border object used in game.
 
@@ -20,6 +25,7 @@ class Border(object):
     color: tuple[int, int, int]
         color of border
     """
+    DEF_SHORT = 20
     def __init__(self, x: int, y: int, height: int, width: int, color: tuple[int, int, int]):
         self.x: int = x
         self.y: int = y
@@ -29,6 +35,9 @@ class Border(object):
 
 
 class Borders(object):
+    """
+    Class that contains all three borders used in game
+    """
     def __init__(self):
         self.top = Border(x=0, 
                           y=0, 

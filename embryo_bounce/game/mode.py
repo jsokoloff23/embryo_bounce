@@ -1,4 +1,10 @@
+"""
+This module contains the Mode enum which is used to control which
+mode game is in.
+"""
+
 from enum import Enum
+
 
 class Mode(Enum):
     """
@@ -10,3 +16,4 @@ class Mode(Enum):
     MAIN_MENU = 3
     HIGH_SCORE_ENTRY = 4
     PLAY_AGAIN = 5
+    

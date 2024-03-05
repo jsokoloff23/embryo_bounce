@@ -1,6 +1,11 @@
-import numpy as np
+"""
+This module contains the Ball class which is the ball object used in the game
+"""
+
 import pygame
+
 from utils import constants
+
 
 class Ball(object):
     """
@@ -26,12 +31,6 @@ class Ball(object):
     self.radius: int = 20
         radius of ball in pixels
 
-    self.area_density: int
-        area density of ball
-
-    self.image_path: str
-        path of image to be used as ball texture
-
     self.image: pygame.Surface
         image to be used as ball texture
     """
@@ -43,12 +42,7 @@ class Ball(object):
         self.x_vel: int = -self.speed
         self.y_vel: int = 0
         self.radius: int = 20
-        self.area_density = 1
         self.image = pygame.image.load(constants.EMBRYO_IMAGE_PATH)
-    
-    @property
-    def mass(self):
-        return np.pi*self.radius**2*self.area_density
 
     @property
     def speed(self):
@@ -73,6 +67,9 @@ class Ball(object):
         self._image_path = value
     
     def get_coords(self):
+        """
+        returns coords as (x, y) tuple
+        """
         return (self.x, self.y)
 
     def set_pos_from_coords(self, coords: tuple[float, float]):
@@ -80,7 +77,7 @@ class Ball(object):
         arguments:
 
         coords: tuple[float, float]
-            normalized coords (x,y)
+            normalized coords (x, y)
         """
         if coords:
             self.x , self.y = coords

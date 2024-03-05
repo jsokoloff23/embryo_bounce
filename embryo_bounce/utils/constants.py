@@ -1,3 +1,7 @@
+"""
+constants used throughout the program
+"""
+
 import os
 import sys
 
@@ -37,10 +41,10 @@ LIVES_IMAGE_Y = 40
 HS_TITLE_Y = 20
 HS_ESC_X = 20
 HS_ESC_Y = 670
-HS_NAME_X = 40
+HS_NAME_X = 200
 HS_Y = 100
 HS_Y_INCR = 100
-HS_SCORE_X = 340
+HS_SCORE_X = 500
 #colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)

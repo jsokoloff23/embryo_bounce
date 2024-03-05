@@ -1,5 +1,12 @@
+"""
+This module contains the Paddle class which is the paddle object used in
+the game.
+"""
+
 import pygame
+
 from utils import constants
+
 
 class Paddle(object):
     """
@@ -36,7 +43,7 @@ class Paddle(object):
         return self._y
     
     #so that paddle position can't be outside of game boundary
-    @y.setter  
+    @y.setter
     def y(self, value):
         if value <= self.min_y:
             self._y = self.min_y
@@ -56,7 +63,7 @@ class Paddle(object):
     #coords of top right corner
     @property
     def top_coords(self):
-         return (self.width+self.x, self.y)
+        return (self.width+self.x, self.y)
     
     #coords of center right
     @property

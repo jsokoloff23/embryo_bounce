@@ -1,3 +1,8 @@
+"""
+This module contains the PositionManager class which manages object
+positions.
+"""
+
 from game.assets.ball import Ball
 from game.assets.border import Borders
 from game.assets.paddle import Paddle
@@ -5,13 +10,32 @@ from game.managers.collision_manager import CollisionManager
 from utils import constants
 from utils.hand_detection import HandDetector
 
+
 class PositionManager(object):
     """
     Manages object positions and updates them.
+
+    Constructor Parameters:
+
+    hand_detector: HandDetector
+        HandDetector instance used by game
+
+    paddle: Paddle
+        Paddle instance used by game
+
+    ball: Ball
+        Ball instance used by game
+
+    borders: Borders
+        Borders instance used by game
+
+    collision_manager: CollisionManager
+        CollisionManager instance used by game
     """
-    def __init__(self, 
-                 hand_detector: HandDetector, 
-                 paddle: Paddle, 
+
+    def __init__(self,
+                 hand_detector: HandDetector,
+                 paddle: Paddle,
                  ball: Ball,
                  borders: Borders,
                  collision_manager: CollisionManager):

@@ -1,3 +1,7 @@
+"""
+This module contains all implementation of the webcam interface.
+"""
+
 from threading import Thread
 
 import cv2
@@ -17,6 +21,10 @@ class HandCam(Thread):
 
     index: int = 0
         index of webcam to be used
+
+    Implements:
+    
+    thread.Thread
     """
     def __init__(self, hand_detector: HandDetector, index: int = 0):
         #Thread init() must be called or else exception is raised
@@ -81,6 +89,9 @@ class HandCam(Thread):
             return image.dtype
         
     def stop_stream(self):
+        """
+        Sets self.is_stopped to True to stop image stream.
+        """
         self.is_stopped = True
         
     def run(self):

@@ -1,9 +1,17 @@
+"""
+This module contains all implementation of hand detection.
+
+Classes:
+
+HandDetector: Class used to process images and detect hand presence and 
+              positions
+"""
+
 import copy
 import time
 
 import mediapipe as mp
 import numpy as np
-
 from mediapipe.tasks.python import vision, BaseOptions
 from mediapipe.tasks.python.vision import HandLandmarkerResult, RunningMode
 from mediapipe.framework.formats import landmark_pb2
@@ -11,7 +19,7 @@ from mediapipe.framework.formats import landmark_pb2
 from utils import constants
 
 
-class HandDetector(object):
+class HandDetector():
     """
     Creates and manages hand_landmarker which receives images from HandCam
     and processes the images to get a HandLandmarkerResult. Result and 
@@ -33,6 +41,7 @@ class HandDetector(object):
         self.min_hand_presence_confidence=0.2
         self.min_tracking_confidence=0.2
         self.running_mode = RunningMode.LIVE_STREAM
+        self.landmarker = None
         self.start_time = time.time()
 
     #@property to make them read-only
@@ -45,10 +54,13 @@ class HandDetector(object):
         return self._image
 
     def set_landmarker(self):
+        """
+        sets landmarer using current options
+        """
         #Making this function a class attribute crashes mediapipe without
         #a logged error or exception, so define it here instead.
-        def set_result(result: HandLandmarkerResult, 
-                       output_image: mp.Image, 
+        def set_result(result: HandLandmarkerResult,
+                       output_image: mp.Image,
                        timestamp_ms: int):
             #output image can't be modofied so make modifiable copy
             self._image = copy.deepcopy(output_image.numpy_view())
@@ -58,9 +70,13 @@ class HandDetector(object):
         self.landmarker = vision.HandLandmarker.create_from_options(options)
 
     def detect_async(self, image):
+        """
+        sets detect_async function of landmarker.
+        """
         #multiply by 1000 to get ms
         time_ms = int((time.time() - self.start_time)*1000)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
+        #Takes image and time in milliseconds as arguments
         self.landmarker.detect_async(mp_image, time_ms)
 
     def draw_landmarks_on_image(self) -> np.ndarray:
@@ -100,7 +116,8 @@ class HandDetector(object):
 
         """
         for lmarks in self.result.hand_landmarks:
-            #Index 9 is MIDDLE_FINGER_MCP landmark. see https://developers.google.com/mediapipe/solutions/vision/hand_landmarker
+            #Index 9 is MIDDLE_FINGER_MCP landmark. 
+            #see https://developers.google.com/mediapipe/solutions/vision/hand_landmarker
             return(lmarks[9].x, lmarks[9].y)
             
     def _get_normalized_proto(self, hand_landmarks) -> landmark_pb2.NormalizedLandmarkList:

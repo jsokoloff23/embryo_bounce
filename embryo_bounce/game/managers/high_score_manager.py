@@ -1,3 +1,8 @@
+"""
+This module contains the HighScoreManager class which manages high scores
+and writing high scores to the highscores.cfg file.
+"""
+
 import ast
 import configparser
 import os
@@ -5,6 +10,14 @@ import os
 from utils import constants
 
 class HighScoreManager(configparser.ConfigParser):
+    """
+    This class manages high scores and writes and reads high scores
+    from a config file created with configparser
+
+    Implements: 
+    
+    configparser.ConfigPraser
+    """
     SECTION = "High Scores"
     OPTION = "highscores"
     NUM_PLAYERS = 5
@@ -15,6 +28,9 @@ class HighScoreManager(configparser.ConfigParser):
         self._init_from_file()
 
     def get_entries(self):
+        """
+        returns current high score entries
+        """
         section = HighScoreManager.SECTION
         option = HighScoreManager.OPTION
         if self.has_section(section):
@@ -23,6 +39,9 @@ class HighScoreManager(configparser.ConfigParser):
             return []
         
     def is_high_score(self, new_score):
+        """
+        determines if score is a new high score.
+        """
         scores = self._get_scores()
         if len(self.entries) < HighScoreManager.NUM_PLAYERS:
             return True
@@ -32,6 +51,10 @@ class HighScoreManager(configparser.ConfigParser):
         return False
 
     def write_new_high_score(self, new_name: str, new_score: int):
+        """
+        determines if score is a new high score, and if it is, writes it to
+        highscore.cfg file.
+        """
         if not self.has_section(HighScoreManager.SECTION):
             self.add_section(HighScoreManager.SECTION)
         num_players = HighScoreManager.NUM_PLAYERS
@@ -57,6 +80,7 @@ class HighScoreManager(configparser.ConfigParser):
         for index, score in enumerate(scores):
             if new_score > score:
                 return index
+        return None
 
     def _get_scores(self):
         return [int(entry[1]) for entry in self.entries]
@@ -68,7 +92,7 @@ class HighScoreManager(configparser.ConfigParser):
         if os.path.exists(self.filename):
             self.read(self.filename)
             self.entries = self.get_entries()
-    
+
     def _write_entries(self):
         section = HighScoreManager.SECTION
         option = HighScoreManager.OPTION
