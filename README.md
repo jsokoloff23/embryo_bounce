@@ -27,7 +27,7 @@ SOFTWARE.
 <br />
 <div align="center">
   <a href="https://github.com/rplab/LS_Pycro_App">
-    <img src="https://raw.githubusercontent.com/jsokoloff23/embryo_bounce/main/embryo.PNG?token=GHSAT0AAAAAACOOMC2LMHHJTY74EX6QRSZ6ZPHORHA" alt="Logo" width="80" height="80">
+    <img src="https://raw.githubusercontent.com/jsokoloff23/embryo_bounce/main/embryo.PNG" alt="Logo" width="80" height="80">
   </a>
 
 ## embryo_bounce
