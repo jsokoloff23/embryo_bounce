@@ -69,14 +69,16 @@ SOFTWARE.
 
 ### Other Aspects
  <p align="left">
-    The code style adheres to PEP8 for the most part. I usually use a linter but Line limits are broken when readability would be
+    The code style adheres to PEP8 for the most part. Line limits are broken when readability would be
     sacrificed (I'm a general proponent of 100 character limit). 
   </p>
 
 ### Assets
  <p align="left">
     The assets in the game are all zebrafish related (perhaps the sounds are debatable). Zebrafish are
-    the primary imaging specimen used in our lab and one that is of great importance in modern biology.
+    the primary imaging specimen used in my lab and I've become quite fond of them both as an animal and as
+    a model biological organism! I thought it would be a good meme at first if the ball was en embryo, but then 
+    I decided to go full meme and make everything zebrafish related.
  </p>
 
 
