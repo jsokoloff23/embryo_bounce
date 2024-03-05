@@ -8,6 +8,8 @@ from mediapipe.tasks.python import vision, BaseOptions
 from mediapipe.tasks.python.vision import HandLandmarkerResult, RunningMode
 from mediapipe.framework.formats import landmark_pb2
 
+from utils import constants
+
 
 class HandDetector(object):
     """
@@ -25,7 +27,7 @@ class HandDetector(object):
     def __init__(self):
         self._result = None
         self._image = None
-        self.model_asset_path = "C:\Users\marim\Desktop\Protect-the-Embryos\hand_landmarker.task"
+        self.model_asset_path = f"{constants.CWD}/utils/hand_landmarker.task"
         self.num_hands = 1
         self.min_hand_detection_confidence=0.2
         self.min_hand_presence_confidence=0.2
@@ -103,8 +105,9 @@ class HandDetector(object):
             
     def _get_normalized_proto(self, hand_landmarks) -> landmark_pb2.NormalizedLandmarkList:
         proto = landmark_pb2.NormalizedLandmarkList()
-        proto.landmark.extend([landmark_pb2.NormalizedLandmark(
-            x=l.x, y=l.y, z=l.z) for l in hand_landmarks
+        proto.landmark.extend([
+            landmark_pb2.NormalizedLandmark(
+                x=l.x, y=l.y, z=l.z) for l in hand_landmarks
         ])
         return proto
     

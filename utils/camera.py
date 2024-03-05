@@ -1,6 +1,6 @@
-import cv2
-
 from threading import Thread
+
+import cv2
 
 from utils.hand_detection import HandDetector
 
@@ -22,8 +22,29 @@ class HandCam(Thread):
         #Thread init() must be called or else exception is raised
         super().__init__()
         self.cap = cv2.VideoCapture(index)
+        self._fps = self._init_fps()
+        self._shape = self._init_shape()
+        self._dtype = self._init_dtype()
+        self._aspect_ratio = self._init_aspect_ratio()
         self.is_stopped = False
         self.hand_detector = hand_detector
+    
+    #@property to make them read-only
+    @property
+    def fps(self):
+        return self._fps
+    
+    @property
+    def shape(self):
+        return self._shape
+    
+    @property
+    def dtype(self):
+        return self._dtype 
+    
+    @property
+    def aspect_ratio(self):
+        return self._aspect_ratio 
 
     def start_stream(self):
         """
@@ -35,6 +56,29 @@ class HandCam(Thread):
                 self.hand_detector.detect_async(image)
         #release when feed is stopped by is_stopped flag
         self.cap.release()
+
+    def _init_fps(self):
+        """
+        returns frames per second of camera
+        """
+        return self.cap.get(cv2.CAP_PROP_FPS)
+    
+    def _init_shape(self):
+        """
+        returns shape of image returned by cam as tuple 
+        (height, width, num_channels)
+        """
+        captured, image = self.cap.read()
+        if captured:
+            return image.shape
+        
+    def _init_aspect_ratio(self):
+        return self.shape[1]/self.shape[0]
+    
+    def _init_dtype(self):
+        captured, image = self.cap.read()
+        if captured:
+            return image.dtype
         
     def stop_stream(self):
         self.is_stopped = True
@@ -45,4 +89,3 @@ class HandCam(Thread):
         separate thread.
         """
         self.start_stream()
-
