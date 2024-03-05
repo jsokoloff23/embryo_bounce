@@ -41,6 +41,9 @@ SOFTWARE.
 <p align="left">
     Hello! My name is Jonah and I'm a research assistant in the Parthasarathy lab in the Department 
     of Physics at the University of Oregon. This game was created as part of an interview process at CZBiohub.
+    The project was to make a pong-style game with Python using hand motion controls from video captured via 
+    webcam. I decided to go with a zebrafish theme because both my lab and the lab at CZ work with zebrafish
+    as a model organism!
   </p>
 
 ## Design
