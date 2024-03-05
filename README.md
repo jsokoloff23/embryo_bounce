@@ -23,6 +23,8 @@ SOFTWARE.
 
 -->
 
+<!-- README-TOP -->
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -172,5 +174,3 @@ Email: jsokoloff23@gmail.com
 * [discuss python forums](https://discuss.python.org/)
 * [GeeksforGeeks](https://www.geeksforgeeks.org/)
 * [ChatGPT](https://chat.openai.com/) (mostly for formatting/best practices)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
