@@ -1,15 +1,16 @@
+import ast
 import configparser
 import os
-import ast
+
+from utils import constants
 
 class HighScoreManager(configparser.ConfigParser):
-    FILENAME = "highscores.cfg"
     SECTION = "High Scores"
     OPTION = "highscores"
     NUM_PLAYERS = 5
     def __init__(self):
         super().__init__()
-        self.filename = HighScoreManager.FILENAME
+        self.filename = constants.HS_CFG_PATH
         self.entries: list = []
         self._init_from_file()
 
@@ -71,7 +72,6 @@ class HighScoreManager(configparser.ConfigParser):
     def _write_entries(self):
         section = HighScoreManager.SECTION
         option = HighScoreManager.OPTION
-        filename = HighScoreManager.FILENAME
         self.set(section, option, str(self.entries))
-        with open(filename, "w") as configfile:
+        with open(self.filename, "w") as configfile:
             self.write(configfile)
