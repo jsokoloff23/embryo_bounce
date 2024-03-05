@@ -145,7 +145,7 @@ class Game(object):
         event manager when ball is gone
         """
         self.position_manager.update(False)
-        self.display_manager.game_update(self.score, self.lives)
+        self.display_manager.game_update(self.lives, self.score)
         if self.frames_no_ball > Game.NO_BALL_FRAMES:
             self.lives -= 1
             self._spawn_new_ball()
@@ -173,12 +173,12 @@ class Game(object):
             if self.frame_num < Game.INITIAL_WAIT_FRAMES:
                 self.score = 0
                 self.position_manager.update(False)
-                self.display_manager.game_update(self.score, self.lives)
+                self.display_manager.game_update(self.lives, self.score)
             #normal game loop with ball moving
             else:
                 if not self.is_ball_gone:
                     self.position_manager.update()
-                    self.display_manager.game_update(self.score, self.lives)
+                    self.display_manager.game_update(self.lives, self.score)
                     self._increase_ball_speed()
                     self.frames_no_ball = 0
                     self._is_ball_gone_update()
