@@ -51,6 +51,11 @@ class DisplayManager():
         self._blit_game_surface()
         pygame.display.update()
 
+    def high_score_update(self, entries):
+        self._draw_high_scores(entries)
+        self._blit_bg_surface()
+        pygame.display.update()
+
     def play_again_update(self, response):
         self._set_cam_surface()
         self._draw_play_again(response)
@@ -116,8 +121,8 @@ class DisplayManager():
         DrawManager.draw_border(self.game_surface, self.borders.back)
         DrawManager.draw_border(self.game_surface, self.borders.bot)
         if self.ball:
-            DrawManager.draw_ball(self.bg_surface_copy, self.ball)
-        DrawManager.draw_paddle(self.bg_surface, self.paddle)
+            DrawManager.draw_ball(self.game_surface, self.ball)
+        DrawManager.draw_paddle(self.game_surface, self.paddle)
         DrawManager.draw_lives(self.bg_surface, self.paddle, lives)
         DrawManager.draw_text_box(surface=self.bg_surface, 
                                   text=f"Score: {score}", 
@@ -136,7 +141,28 @@ class DisplayManager():
             self.game_surface, "New High Score!", y=constants.NEW_HS_Y)
         DrawManager.draw_text_box(
             self.game_surface, f"Enter Name: {name}", y=constants.HS_ENTRY_Y)
-        
+    
+    def _draw_high_scores(self, high_score_entries):
+        self.bg_surface = self.bg_surface_copy.copy()
+        DrawManager.draw_text_box(surface=self.bg_surface, 
+                                  text="High Scores", 
+                                  y=constants.HS_TITLE_Y)
+        DrawManager.draw_text_box(surface=self.bg_surface,
+                                  text="ESC = Menu",
+                                  x=constants.HS_ESC_X,
+                                  y=constants.HS_ESC_Y)
+        for entry_num, entry in enumerate(high_score_entries):
+            name = str(entry[0])
+            score = str(entry[1])
+            DrawManager.draw_text_box(surface=self.bg_surface, 
+                                      text=name, 
+                                      x=constants.HS_NAME_X,
+                                      y=constants.HS_Y+constants.HS_Y_INCR*entry_num)
+            DrawManager.draw_text_box(surface=self.bg_surface, 
+                                      text=score, 
+                                      x=constants.HS_SCORE_X, 
+                                      y=constants.HS_Y+constants.HS_Y_INCR*entry_num)
+
     def _draw_play_again(self, response):
         self.game_surface = self.game_surface_copy.copy()
         DrawManager.draw_text_box(
