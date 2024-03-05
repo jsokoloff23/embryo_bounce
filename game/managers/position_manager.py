@@ -1,10 +1,9 @@
-from utils import constants
-from game.managers.collision_manager import CollisionManager
 from game.assets.ball import Ball
-from game.assets.paddle import Paddle
 from game.assets.border import Borders
+from game.assets.paddle import Paddle
+from game.managers.collision_manager import CollisionManager
+from utils import constants
 from utils.hand_detection import HandDetector
-
 
 class PositionManager(object):
     """
@@ -22,14 +21,22 @@ class PositionManager(object):
         self.borders = borders
         self.collision_manager = collision_manager
 
-    def update(self):
+    def update(self, should_update_ball: bool =True):
         """
         updates game object positions
         """
         self._update_paddle_position()
-        self._update_embryo_position()
-        self._detect_collisions()
-
+        self._update_embryo_position(should_update_ball)
+        self._detect_collisions(should_update_ball)
+    
+    def is_ball_gone(self):
+        """
+        returns true if ball position + radius (so it's visually completely
+        off screen) is negative
+        """
+        if self.ball:
+            return self.ball.x + self.ball.radius <= 0
+        
     def _detect_collisions(self, should_detect_collision: bool):
         """
         detect all ball collision events
@@ -81,10 +88,10 @@ class PositionManager(object):
             y = (hand_coords[1]*constants.GAME_Y_SIZE)*scaling + offset
             self.paddle.y = y
 
-    def _update_embryo_position(self):
+    def _update_embryo_position(self, should_update_ball):
         """
         updates embryo position
         """
-        self.ball.x += self.ball.x_vel
-        self.ball.y += self.ball.y_vel
-        
+        if self.ball and should_update_ball:
+            self.ball.x += self.ball.x_vel
+            self.ball.y += self.ball.y_vel
