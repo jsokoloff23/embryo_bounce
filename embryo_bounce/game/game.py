@@ -9,8 +9,8 @@ from game.assets.ball import Ball
 from game.assets.border import Borders
 from game.assets.paddle import Paddle
 from game.managers import DisplayManager, PositionManager, CollisionManager, HighScoreManager, SoundManager
+from game.managers.mode_managers import Gameplay, HighScores, Exit, MainMenu, HighScoreEntry, PlayAgain
 from game.mode import Mode
-from game.mode_classes import Gameplay, HighScores, Exit, MainMenu, HighScoreEntry, PlayAgain
 from utils.camera import HandCam
 from utils.hand_detection import HandDetector
 

@@ -241,3 +241,4 @@ class PlayAgain():
                     else:
                         #addes character
                         self.try_again += event.unicode
+                        
