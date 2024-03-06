@@ -26,7 +26,7 @@ class SoundManager(object):
         #don't want to restart song if mode isn't changed
         if mode != self.mode:
             self.mode = mode
-            if self.mode == Mode.GAME:
+            if self.mode == Mode.GAMEPLAY:
                 self.play_game_song()
             elif self.mode == Mode.MAIN_MENU:
                 self.play_menu_song()
