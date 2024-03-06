@@ -41,6 +41,9 @@ SOFTWARE.
 <p align="left">
     Hello! My name is Jonah and I'm a research assistant in the Parthasarathy lab in the Department 
     of Physics at the University of Oregon. This game was created as part of an interview process at CZBiohub.
+    The project was to make a pong-style game with Python using hand motion controls from video captured via 
+    webcam. I decided to go with a zebrafish theme because both my lab and the lab at CZ work with zebrafish
+    as a model organism!
   </p>
 
 ## Design
@@ -69,14 +72,16 @@ SOFTWARE.
 
 ### Other Aspects
  <p align="left">
-    The code style adheres to PEP8 for the most part. I usually use a linter but Line limits are broken when readability would be
+    The code style adheres to PEP8 for the most part. Line limits are broken when readability would be
     sacrificed (I'm a general proponent of 100 character limit). 
   </p>
 
 ### Assets
  <p align="left">
     The assets in the game are all zebrafish related (perhaps the sounds are debatable). Zebrafish are
-    the primary imaging specimen used in our lab and one that is of great importance in modern biology.
+    the primary imaging specimen used in my lab and I've become quite fond of them both as an animal and as
+    a model biological organism! I thought it would be a good meme at first if the ball was en embryo, but then 
+    I decided to go full meme and make everything zebrafish related.
  </p>
 
 
@@ -109,9 +114,6 @@ completely fine. As long as modules from requirements.txt are installed, this sh
  python <cloned_repo_directory>/embry_bounce/main.py
  ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 ## How to Play
 <p align="left">
   Once the game is launched, you'll be met with the main menu! It uses the arrow keys
@@ -140,15 +142,10 @@ completely fine. As long as modules from requirements.txt are installed, this sh
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- CONTACT -->
 ## Contact
 
 Email: jsokoloff23@gmail.com
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 <!-- ACKNOWLEDGMENTS -->
 ## Code Acknowledgments
@@ -172,5 +169,3 @@ Email: jsokoloff23@gmail.com
 * [discuss python forums](https://discuss.python.org/)
 * [GeeksforGeeks](https://www.geeksforgeeks.org/)
 * [ChatGPT](https://chat.openai.com/) (mostly for formatting/best practices)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
