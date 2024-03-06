@@ -42,7 +42,7 @@ class HandDetector():
         self.min_tracking_confidence=0.2
         self.running_mode = RunningMode.LIVE_STREAM
         self.landmarker = None
-        self.start_time = time.time()
+        self.start_time_ns = time.time_ns()
 
     #@property to make them read-only
     @property
@@ -73,8 +73,9 @@ class HandDetector():
         """
         sets detect_async function of landmarker.
         """
-        #multiply by 1000 to get ms
-        time_ms = int((time.time() - self.start_time)*1000)
+        #detection sometimes complains about monotonic increase of times
+        #so input nanoseconds so that it's always monotonic
+        time_ms = int((time.time_ns() - self.start_time_ns))
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=image)
         #Takes image and time in milliseconds as arguments
         self.landmarker.detect_async(mp_image, time_ms)
