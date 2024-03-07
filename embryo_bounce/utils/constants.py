@@ -5,20 +5,25 @@ constants used throughout the program
 import os
 import sys
 
-#game surface size
-GAME_X_SIZE = 800
-GAME_Y_SIZE = 600
+#game settings
+FRAMERATE = 60
+INIT_LIVES = 3
+INITIAL_WAIT_FRAMES = FRAMERATE*2
+NO_BALL_FRAMES = FRAMERATE*2
+FRAMES_NO_SPEED = FRAMERATE*3
+#speed increase increment
+SPEED_INCREMENT = 2
 #scaling for hand position so entire webcam field of view isn't used
 HAND_POSITION_SCALING = 1.8
 #offset to correct scaling
 HAND_COORDS_OFFSET = -220
-#camera feed height in game
-CAM_H = 120
-#speed increase increment
-SPEED_INCREMENT = 3
 #character limit for high score name
 NAME_CHARACTER_LIMIT = 12
 #object coords and sizes
+GAME_X_SIZE = 800
+GAME_Y_SIZE = 600
+#camera feed height in game
+CAM_H = 120
 DEF_F_SIZE = 60
 NEW_HS_Y = 250
 HS_ENTRY_Y = 350
