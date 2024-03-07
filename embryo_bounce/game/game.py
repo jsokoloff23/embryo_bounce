@@ -64,28 +64,34 @@ class Game(object):
                 gameplay = Gameplay(ball=self.ball,
                                     paddle=self.paddle,
                                     borders=self.borders,
-                                    sound_manager=self.sound_manager,
+                                    position_manager=self.position_manager,
                                     display_manager=self.display_manager,
+                                    sound_manager=self.sound_manager,
                                     collision_manager=self.collision_manager,
-                                    position_manager=self.position_manager)
-                score = gameplay.manage_events()
-                mode = self._get_post_score_mode(score)
+                                    high_score_manager=self.high_score_manager)
+                mode = gameplay.manage_events()
+                score = gameplay.score
             elif self.mode == Mode.HIGH_SCORES:
                 high_scores = HighScores(display_manager=self.display_manager,
                                          high_score_manager=self.high_score_manager)
                 high_scores.manage_events()
                 mode = Mode.MAIN_MENU
             elif self.mode == Mode.EXIT:
-                exit = Exit(self.hand_cam)
-                exit.manage_events()
+                #named exit manager to avoid exit keyword
+                exit_manager = Exit(self.hand_cam)
+                exit_manager.manage_events()
             elif self.mode == Mode.MAIN_MENU:
                 main_menu = MainMenu(self.display_manager)
                 mode = main_menu.manage_events()
             elif self.mode == Mode.HIGH_SCORE_ENTRY:
-                hs_entry = HighScoreEntry(display_manager=self.display_manager,
-                                          high_score_manager=self.high_score_manager,
-                                          score=score)
-                hs_entry.manage_events()
+                try:
+                    hs_entry = HighScoreEntry(display_manager=self.display_manager,
+                                              high_score_manager=self.high_score_manager,
+                                              score=score)
+                    hs_entry.manage_events()
+                #if score hasn't been initialized
+                except AttributeError:
+                    pass
                 mode = Mode.PLAY_AGAIN
             elif self.mode == Mode.PLAY_AGAIN:
                 play_again = PlayAgain(self.display_manager)
