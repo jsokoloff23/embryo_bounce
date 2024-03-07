@@ -53,7 +53,7 @@ class PositionManager(object):
         self._update_embryo_position(should_update_ball)
         self._detect_collisions(should_update_ball)
     
-    def is_ball_gone(self):
+    def is_ball_out(self):
         """
         returns true if ball position + radius (so it's visually completely
         off screen) is negative
