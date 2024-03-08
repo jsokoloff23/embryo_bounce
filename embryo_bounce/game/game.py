@@ -111,23 +111,4 @@ class Game(object):
         elif mode == Mode.GAMEPLAY or mode == Mode.MAIN_MENU:
             self.sound_manager.update_music(mode)
         self.mode = mode
-
-    def _get_post_score_mode(self, score: int | None):
-        """
-        returns mode based on score.
-
-        If score is an int and a high score, returns HIGH_SCORE_ENTRY.
-
-        If score is an int and not a high score, returns PLAY_AGAIN.
-
-        If score is None, returns MAIN_MENU.
-        """
-        if score is None:
-            mode = Mode.MAIN_MENU
-        else:
-            if self.high_score_manager.is_high_score(score):
-                mode = Mode.HIGH_SCORE_ENTRY
-            else:
-                mode = Mode.PLAY_AGAIN
-        return mode
     
